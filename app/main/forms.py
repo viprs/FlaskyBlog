@@ -9,5 +9,5 @@ from wtforms.validators import Required
 
 class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
-    msg = StringField('What is your msg?', validators=[Required()])
+    #msg = StringField('What is your msg?', validators=[Required()])
     submit = SubmitField('Submit')
