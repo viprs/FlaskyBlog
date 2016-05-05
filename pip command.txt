@@ -1,0 +1,9 @@
+备份pip已安装的插件
+pip freeze >requirements.txt
+
+
+批量导入插件
+pip install -r requirements.txt
+
+安装单个插件
+pip install Flask-Login
