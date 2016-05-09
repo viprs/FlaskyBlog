@@ -17,6 +17,11 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
+                {% if current_user.is_authenticated %}
+                <li>
+                    <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
+                </li>
+                {% endif %}
             </ul>
         </div>
         <div class="nav navbar-nav navbar-right">
