@@ -19,7 +19,7 @@ def before_request():
             return redirect(url_for('auth.unconfirmed'))
 
 
-@auth.route('/unconfirmed')
+@auth.route('/auth/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
