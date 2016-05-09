@@ -10,7 +10,7 @@
 初始化数据库迁移脚本
 python manage.py db init
 
-创建数据库，类似于db.create_all()
+创建数据库，类似于db.create_all()，以后每一次更新数据模型，都要运行
 python manage.py db migrate -m "init migration"
 
 把更新后的数据模型应用到数据库
