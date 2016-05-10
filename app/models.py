@@ -182,6 +182,7 @@ class User(UserMixin, db.Model):
 
     def is_administrator(self):
         return self.can(Permission.ADMINISTER)
+        #return self.can(0xff)
 
     def ping(self):
         self.last_seen = datetime.datetime.utcnow()
