@@ -34,6 +34,20 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.utcnow)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    @staticmethod
+    def generate_fake(count=100):
+        from random import seed, randint
+        import forgery_py
+
+        seed()
+        user_count = User.query.count()
+        for i in xrange(count):
+            u = User.query.offset(randint(0, user_count-1)).first()
+            p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 3)),
+                     timestamp=forgery_py.date.date(True), author=u)
+            db.session.add(p)
+            db.session.commit()
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -77,6 +91,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String(64))
     location = db.Column(db.String(64))
     about_me = db.Column(db.Text())
+    avatar_hash = db.Column(db.String(32))
     member_since = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     posts = db.relationship('Post', backref='author', lazy='dynamic')

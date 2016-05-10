@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
 
 {% block title %} Flasky Blog{% endblock %}
 
@@ -20,5 +21,13 @@
 <div class="post-tabs">
     <h3>Posts by {{ current_user.username }}</h3>
     {% include '_posts.html' %}
+    <div class="pagination">
+        {{ macros.pagination_widget(pagination, '.index') }}
+    </div>
  </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
 {% endblock %}

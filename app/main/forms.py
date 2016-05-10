@@ -3,6 +3,7 @@
 __author__ = 'Samren'
 from flask import Flask, render_template, session, redirect, url_for, flash
 from flask.ext.wtf import Form
+from flask.ext.pagedown.fields import PageDownField
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField,\
 SelectField
 from wtforms.validators import Required, Length, Email, Regexp
@@ -51,5 +52,6 @@ class EditProfileAdminForm(Form):
 
 
 class PostForm(Form):
-    body = TextAreaField("What's on your mind?", validators=[Required()])
+    #body = TextAreaField("What's on your mind?", validators=[Required()])
+    body = PageDownField("What's on your mind?", validators=[Required()])
     submit = SubmitField('Submit')
