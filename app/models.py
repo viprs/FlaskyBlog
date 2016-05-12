@@ -63,6 +63,15 @@ class Post(db.Model):
 db.event.listen(Post.body, 'set', Post.on_change_body)
 
 
+class Follow(db.Model):
+    __tablename__ = 'follows'
+    follower_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    followed_id = db.Column(db.Integer, db.ForeignKey('users.id'),
+                            primary_key=True)
+    timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -109,6 +118,20 @@ class User(UserMixin, db.Model):
     member_since = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     last_seen = db.Column(db.DateTime(), default=datetime.datetime.utcnow)
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    # user followed, user关注的人
+    # user follower, 关注user的人
+    followed = db.relationship('Follow',
+                               foreign_keys=[Follow.follower_id],
+                               backref=db.backref('follower', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+    follower = db.relationship('Follow',
+                               foreign_keys=[Follow.followed_id],
+                               backref=db.backref('followed', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+    #cascade 层叠选项，
+    #all,delete-orphan 启用所有默认层叠选项，而且还要删除孤儿记录
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
@@ -203,6 +226,24 @@ class User(UserMixin, db.Model):
         hash = hashlib.md5(self.email.encode('utf-8')).hexdigest()
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
+
+    def follow(self, user):
+        if not self.is_following(user):
+            f = Follow(follower=self, followed=user)
+            db.session.add(f)
+
+    def unfollow(self, user):
+        f = self.followed.filter_by(followed_id=user.id).first()
+        if f:
+            db.session.delete(f)
+
+    def is_following(self, user):
+        return self.followed.filter_by(
+            followed_id=user.id).first() is not None
+
+    def is_followed_by(self, user):
+        return self.follower.filter_by(
+            follower_id=user.id).first() is not None
 
 
 class AnonymousUser(AnonymousUserMixin):
