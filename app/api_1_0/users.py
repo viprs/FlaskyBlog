@@ -20,15 +20,15 @@ def get_user_posts(id):
         page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    prev = None
+    prev_page = None
     if pagination.has_prev:
-        prev = url_for('api.get_posts', page=page-1, _external=True)
-    next = None
+        prev_page = url_for('api.get_posts', page=page-1, _external=True)
+    next_page = None
     if pagination.has_next:
-        next = url_for('api.get_posts', page=page+1, _external=True)
+        next_page = url_for('api.get_posts', page=page+1, _external=True)
     return jsonify({
         'posts': [post.to_json() for post in posts],
-        'prev': prev,
-        'next': next,
+        'prev_page': prev_page,
+        'next_page': next_page,
         'count': pagination.total
     })
