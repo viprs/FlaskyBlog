@@ -19,7 +19,7 @@
     {% endif %}
 </div>
 <div class="post-tabs">
-    <h3>Posts by {{ current_user.username }}</h3>
+    <h3>ALL Posts for you,{{ current_user.username }}</h3>
     {% include '_posts.html' %}
     <div class="pagination">
         {{ macros.pagination_widget(pagination, '.index') }}
