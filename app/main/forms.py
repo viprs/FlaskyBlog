@@ -10,6 +10,7 @@ from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
 from ..models import Role, User
 
+
 class NameForm(Form):
     name = StringField('What is your name?', validators=[Required()])
     #msg = StringField('What is your msg?', validators=[Required()])
@@ -54,4 +55,9 @@ class EditProfileAdminForm(Form):
 class PostForm(Form):
     #body = TextAreaField("What's on your mind?", validators=[Required()])
     body = PageDownField("What's on your mind?", validators=[Required()])
+    submit = SubmitField('Submit')
+
+
+class CommentForm(Form):
+    body = StringField('Enter Your Comment', validators=[Required()])
     submit = SubmitField('Submit')
