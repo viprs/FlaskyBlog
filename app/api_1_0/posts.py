@@ -13,7 +13,7 @@ from . import api
 def get_posts():
     page = request.args.get('page', 1, type=int)
     pagination = Post.query.paginate(page,
-        per_page=current_app.config['FLASKY_POST_PER_PAGE'],
+        per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
     prev_page = None
@@ -22,11 +22,13 @@ def get_posts():
     next_page = None
     if pagination.has_next:
         next_page = url_for('api.get_posts', page=page+1, _external=True)
+    post_list = [post.to_json() for post in posts]
     return jsonify({
-        'posts': [post.to_json() for post in posts],
+        'posts': post_list,
         'prev_page': prev_page,
         'next_page': next_page,
-        'count': pagination.total
+        'total_count': pagination.total,
+        'page_count': post_list.__len__()
     })
 
 
