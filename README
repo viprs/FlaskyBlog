@@ -1,4 +1,5 @@
 运行前的准备：
+==============
 0.安装virtualenv 虚拟环境
     apt-get install virtualenv
 1.安装Flask
@@ -6,7 +7,9 @@
 2.导入Flask必需的插件
     pip install -r requirements.txt
 
-
+配置
+===============
+（示例代码中已经包含了data-dev.sqlite数据库文件）
 初始化数据库迁移脚本
 python manage.py db init
 
@@ -19,3 +22,8 @@ python manage.py db upgrade
 运行网站
 python manage.py runserver
 
+
+测试用户
+----------
+用户名 john@example.com 密码 cat
+用户名 sam@example.com 密码 sam
