@@ -18,9 +18,14 @@
             <ul class="nav navbar-nav">
                 <li><a href="/">Home</a></li>
                 {% if current_user.is_authenticated %}
-                <li>
-                    <a href="{{ url_for('main.user', username=current_user.username) }}">Profile</a>
-                </li>
+                <li><a href="{{ url_for('main.user', username=current_user.username) }}">
+                    Profile
+                </a></li>
+                {% endif %}
+                {% if current_user.can(Permission.MODERATE_COMMENTS) %}
+                <li><a href="{{ url_for('main.moderate') }}">
+                    Moderate Comments
+                </a> </li>
                 {% endif %}
             </ul>
         </div>
@@ -52,6 +57,7 @@
     {% endfor %}
 
     {% block page_content %}
+
     {% endblock %}
 </div>
 {% endblock %}
