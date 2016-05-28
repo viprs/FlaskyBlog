@@ -72,6 +72,7 @@ def confirm(token):
         flash('The confirmation link is invalid or has expired.')
     return redirect(url_for('main.index'))
 
+
 @auth.route('/confirm')
 @login_required
 def resend_confirmation():

@@ -7,6 +7,7 @@ from wtforms.validators import Required, Length, Email, Regexp, EqualTo
 from wtforms import ValidationError
 from ..models import User
 
+
 class LoginForm(Form):
     email = StringField('Email', validators=[Required(), Length(5, 64), Email()])
     password = PasswordField('Password', validators=[Required()])
