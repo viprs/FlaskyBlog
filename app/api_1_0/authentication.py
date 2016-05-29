@@ -26,6 +26,11 @@ def get_token():
                     'expiration': 3600})
 
 
+@api.route('/register', methods=['POST'])
+def register():
+    pass
+
+
 @auth.verify_password
 def verify_password(email_or_token, password):
     if email_or_token == '':
