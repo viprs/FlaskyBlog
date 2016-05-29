@@ -5,11 +5,17 @@
 --------------
 * 安装virtualenv 虚拟环境
     
-    apt-get install virtualenv
+    ubuntu: apt-get install virtualenv
+    windows: pip install virtualenv
+
+* 激活虚拟环境
+
+    virtualenv venv
+    venv\Script\activate
 
 * 安装Flask
 
-    apt-get install Flask
+    pip install Flask
 
 * 导入Flask必需的插件
 
@@ -28,7 +34,7 @@
 
     python manage.py db init
 
-创建数据库，类似于db.create_all()，以后每一次更新数据模型，都要运行
+创建数据库，类似于db.create_all()，以后每一次更新数据模型后，都要运行
 
     python manage.py db migrate -m "init migration"
 
@@ -110,6 +116,7 @@ RESTful API测试
 
 代码覆盖率
 -----------
+详细用法，见manage.py文件
 
     pip install coverage
 
