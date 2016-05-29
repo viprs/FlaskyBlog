@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 #encoding:utf-8
 __author__ = 'Samren'
+import os
 from flask import render_template, redirect, request, url_for, flash
 from flask.ext.login import login_user, login_required, logout_user, \
     current_user
@@ -42,14 +43,17 @@ def login():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email=form.email.data, username=form.username.data,
+        user = User(email=form.email.data,
+                    username=form.username.data,
                     password=form.password.data)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
-        send_email(user.email, 'Confirm Your Account', 'auth/email/confirm', user=user, token=token)
-        flash('A confirmation email has  been sent to you by email')
-        return redirect(url_for('main.index'))
+        send_email(user.email, 'Confirm Your Account',
+                   os.path.join('auth', 'email', 'confirm'),
+                   user=user, token=token)
+        flash('A confirmation email has been sent to you by email.')
+        return redirect(url_for('auth.login'))
     return render_template('auth/register.html', form=form)
 
 
