@@ -80,6 +80,21 @@ RESTful API测试
         ]
     }
 
+测试
+=============
+
+代码覆盖率
+-----------
+    pip install coverage
+
+    
+自动化测试
+--------------
+Flask内建的测试客户端编写单元测试框架
+    test_client
+Selenium进行端到端测试
+    pip install selenium
+    
 
 测试用户
 ----------
